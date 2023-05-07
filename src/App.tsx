@@ -19,6 +19,7 @@ function App() {
   return (
     <div className="App">
       <DropdownSelector
+        placeholder="Choose a creature!"
         selectedOptions={selectedOptions}
         options={options}
         onChange={setSelectedOptions}

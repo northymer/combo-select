@@ -7,12 +7,14 @@ import css from "./DrowdownSelector.module.scss";
 
 interface DropdownSelectorProps {
   disabled?: boolean;
+  placeholder?: string;
   options?: DropdownOption[];
   selectedOptions: DropdownOption[] | null;
   onChange: (o: DropdownOption[]) => void;
 }
 
 export const DropdownSelector: React.FC<DropdownSelectorProps> = ({
+  placeholder = "Choose an option",
   disabled,
   options = [],
   selectedOptions,
@@ -173,9 +175,7 @@ export const DropdownSelector: React.FC<DropdownSelectorProps> = ({
           onBlur={handleInputBlur}
           className={css.input}
           placeholder={
-            selectedOptions?.length && !isInputFocused
-              ? undefined
-              : "Choose a Fruit"
+            selectedOptions?.length && !isInputFocused ? undefined : placeholder
           }
         />
         {!isInputFocused &&
@@ -197,6 +197,9 @@ export const DropdownSelector: React.FC<DropdownSelectorProps> = ({
           })}
         >
           <ul ref={dropdownWrapperRef} className={css.optionList}>
+            {renderedOptions.length === 0 && (
+              <div aria-label="Empty List">No Results Here 🙈</div>
+            )}
             {renderedOptions.map((option, index) => (
               <li
                 key={option.value}
