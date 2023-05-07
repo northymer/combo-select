@@ -18,12 +18,14 @@ function App() {
   >(null);
   return (
     <div className="App">
-      <DropdownSelector
-        placeholder="Choose a creature!"
-        selectedOptions={selectedOptions}
-        options={options}
-        onChange={setSelectedOptions}
-      />
+      <div style={{ width: "260px" }}>
+        <DropdownSelector
+          placeholder="Choose a creature!"
+          selectedOptions={selectedOptions}
+          options={options}
+          onChange={setSelectedOptions}
+        />
+      </div>
     </div>
   );
 }

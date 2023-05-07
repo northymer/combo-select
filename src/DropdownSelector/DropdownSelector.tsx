@@ -156,7 +156,15 @@ export const DropdownSelector: React.FC<DropdownSelectorProps> = ({
   };
 
   return (
-    <div ref={wrapperRef} className={css.wrapper}>
+    <div
+      ref={wrapperRef}
+      aria-label="Selector"
+      className={css.wrapper}
+      onClick={() => {
+        inputRef.current?.focus();
+        handleInputFocus();
+      }}
+    >
       <div
         className={classNames(css.inputWrapper, {
           [css.inputWrapperActive]: isOpen,
@@ -210,6 +218,10 @@ export const DropdownSelector: React.FC<DropdownSelectorProps> = ({
                 onClick={() => handleChange(option)}
               >
                 {option.title}
+                {selectedOptions?.findIndex((o) => o.value === option.value) !==
+                  -1 && (
+                  <span aria-label={`${option.title} is selected`}>✅</span>
+                )}
               </li>
             ))}
           </ul>

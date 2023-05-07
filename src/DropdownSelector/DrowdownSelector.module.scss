@@ -1,6 +1,7 @@
 .wrapper {
   position: relative;
-  width: 260px;
+  width: 100%;
+  cursor: pointer;
 }
 
 .inputWrapper {
@@ -40,6 +41,12 @@
   }
 }
 
+.inputWrapperActive {
+  .input {
+    pointer-events: auto;
+  }
+}
+
 .selectedValuesList {
   position: absolute;
   top: 8px;
@@ -69,6 +76,7 @@
 }
 
 .input {
+  pointer-events: none;
   font-size: 16px;
   line-height: 20px;
   border: none;
@@ -116,7 +124,7 @@
 
 .optionItem {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   padding: 8px 8px;
   border-top: 1px solid transparent;
   border-bottom: 1px solid transparent;
