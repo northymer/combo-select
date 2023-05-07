@@ -51,13 +51,16 @@ export const DropdownSelector: React.FC<DropdownSelectorProps> = ({
       if (!isOpen) return;
 
       const listElements = dropdownWrapperRef.current?.children;
+      if (!listElements?.length) return;
+      let curFocusedPoint = focusedOption === null ? 0 : focusedOption;
       if (event.key === "ArrowUp") {
         if (focusedOption === 0) return;
         if (focusedOption === null) {
           setFocusedOption(0);
         } else {
-          setFocusedOption((o) => (o as number) - 1);
-          listElements?.length && listElements[focusedOption].scrollIntoView();
+          curFocusedPoint = curFocusedPoint === 0 ? 0 : --curFocusedPoint;
+          setFocusedOption(curFocusedPoint);
+          listElements[curFocusedPoint].scrollIntoView();
         }
       }
 
@@ -66,8 +69,12 @@ export const DropdownSelector: React.FC<DropdownSelectorProps> = ({
         if (focusedOption === null) {
           setFocusedOption(0);
         } else {
-          setFocusedOption((o) => (o as number) + 1);
-          listElements?.length && listElements[focusedOption].scrollIntoView();
+          curFocusedPoint =
+            curFocusedPoint === listElements?.length
+              ? listElements.length
+              : ++curFocusedPoint;
+          setFocusedOption(curFocusedPoint);
+          listElements[focusedOption].scrollIntoView();
         }
       }
 
