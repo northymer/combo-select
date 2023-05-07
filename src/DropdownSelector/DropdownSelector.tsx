@@ -19,11 +19,13 @@ export const DropdownSelector: React.FC<DropdownSelectorProps> = ({
   onChange,
 }) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const dropdownWrapperRef = useRef<HTMLUListElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [focusedOption, setFocusedOption] = useState<number | null>(null);
+  const [isTopPosition, setIsTopPosition] = useState(false);
 
   const renderedOptions = options.filter(
     (op) => op.title.toLowerCase().indexOf(searchValue) !== -1
@@ -33,9 +35,33 @@ export const DropdownSelector: React.FC<DropdownSelectorProps> = ({
     (option: DropdownOption) => {
       onChange([option]);
       setIsOpen(false);
+      inputRef.current?.blur();
+      setFocusedOption(null);
     },
     [onChange, setIsOpen]
   );
+
+  useEffect(() => {
+    function updateDropdownPosition() {
+      if (!wrapperRef || !wrapperRef.current) return;
+      const wrapperBound = wrapperRef.current.getBoundingClientRect();
+
+      if (wrapperBound.bottom - wrapperBound.height - 100 < 0) {
+        setIsTopPosition(true);
+      } else {
+        setIsTopPosition(false);
+      }
+    }
+
+    updateDropdownPosition();
+    window.addEventListener("resize", updateDropdownPosition);
+    window.addEventListener("scroll", updateDropdownPosition);
+
+    return () => {
+      window.removeEventListener("resize", updateDropdownPosition);
+      window.removeEventListener("scroll", updateDropdownPosition);
+    };
+  }, [wrapperRef]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent | TouchEvent) {
@@ -44,8 +70,6 @@ export const DropdownSelector: React.FC<DropdownSelectorProps> = ({
         setIsOpen(false);
       }
     }
-
-    // function handleEnterToConfirm() { }
 
     function handleArrowControl(event: KeyboardEvent) {
       if (!isOpen) return;
@@ -82,6 +106,11 @@ export const DropdownSelector: React.FC<DropdownSelectorProps> = ({
         if (focusedOption !== null) {
           handleChange(renderedOptions[focusedOption]);
         }
+      }
+
+      if (event.key === "Escape") {
+        setIsOpen(false);
+        inputRef.current?.blur();
       }
     }
 
@@ -129,10 +158,13 @@ export const DropdownSelector: React.FC<DropdownSelectorProps> = ({
       <div
         className={classNames(css.inputWrapper, {
           [css.inputWrapperActive]: isOpen,
+          [css.inputWrapperBottom]: !isTopPosition,
+          [css.inputWrapperTop]: isTopPosition,
         })}
         role="presentation"
       >
         <input
+          ref={inputRef}
           disabled={disabled}
           type="text"
           value={searchValue}
@@ -151,14 +183,19 @@ export const DropdownSelector: React.FC<DropdownSelectorProps> = ({
           selectedOptions?.length !== 0 && (
             <ul className={css.selectedValuesList}>
               {selectedOptions?.map((opt) => (
-                <li>{opt.title}</li>
+                <li key={opt.value}>{opt.title}</li>
               ))}
             </ul>
           )}
         <Arrow className={css.arrow} onClick={() => setIsOpen((o) => !o)} />
       </div>
       {isOpen && (
-        <div className={css.dropdownWrapper}>
+        <div
+          className={classNames(css.dropdownWrapper, {
+            [css.dropdownWrapperTop]: isTopPosition,
+            [css.dropdownWrapperBottom]: !isTopPosition,
+          })}
+        >
           <ul ref={dropdownWrapperRef} className={css.optionList}>
             {renderedOptions.map((option, index) => (
               <li

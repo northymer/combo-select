@@ -14,15 +14,30 @@
   position: relative;
   padding-inline-start: 8px;
   padding-inline-end: 32px;
-  border: 2px solid transparent;
-  border-bottom: 0;
 }
 
-.inputWrapperActive {
-  border: 2px solid blue;
+.inputWrapperBottom {
+  border: 2px solid transparent;
   border-bottom: none;
-  border-radius: 6px 6px 0 0;
-  background-color: transparent;
+
+  &.inputWrapperActive {
+    border: 2px solid blue;
+    border-bottom: none;
+    border-radius: 6px 6px 0 0;
+    background-color: transparent;
+  }
+}
+
+.inputWrapperTop {
+  border: 2px solid transparent;
+  border-top: none;
+
+  &.inputWrapperActive {
+    border: 2px solid blue;
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    background-color: transparent;
+  }
 }
 
 .selectedValuesList {
@@ -71,12 +86,24 @@
 .dropdownWrapper {
   left: 0px;
   position: absolute;
-  top: 100%;
   width: 100%;
   overflow: hidden;
+}
+
+.dropdownWrapperBottom {
+  top: 100%;
+  bottom: auto;
   border: 2px solid blue;
   border-top: none;
   border-radius: 0 0 6px 6px;
+}
+
+.dropdownWrapperTop {
+  bottom: 100%;
+  top: auto;
+  border: 2px solid blue;
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
 }
 
 .optionList {
