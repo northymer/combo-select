@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import classNames from "classnames";
 import { DropdownOption } from "./DropdownSelector.types";
 import { ReactComponent as Arrow } from "../assets/down-chevron-svgrepo-com.svg";
@@ -27,6 +27,14 @@ export const DropdownSelector: React.FC<DropdownSelectorProps> = ({
 
   const renderedOptions = options.filter(
     (op) => op.title.toLowerCase().indexOf(searchValue) !== -1
+  );
+
+  const handleChange = useCallback(
+    (option: DropdownOption) => {
+      onChange([option]);
+      setIsOpen(false);
+    },
+    [onChange, setIsOpen]
   );
 
   useEffect(() => {
@@ -78,7 +86,14 @@ export const DropdownSelector: React.FC<DropdownSelectorProps> = ({
       document.removeEventListener("touchend", handleClickOutside);
       document.removeEventListener("keyup", handleArrowControl);
     };
-  }, [wrapperRef, focusedOption, isOpen, renderedOptions.length]);
+  }, [
+    wrapperRef,
+    focusedOption,
+    isOpen,
+    renderedOptions.length,
+    handleChange,
+    renderedOptions,
+  ]);
 
   useEffect(() => {
     if (!isOpen && searchValue) {
@@ -100,11 +115,6 @@ export const DropdownSelector: React.FC<DropdownSelectorProps> = ({
 
   const handleInputBlur = () => {
     setIsInputFocused(false);
-  };
-
-  const handleChange = (option: DropdownOption) => {
-    onChange([option]);
-    setIsOpen(false);
   };
 
   return (
