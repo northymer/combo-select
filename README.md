@@ -1,3 +1,18 @@
+# Notes for the reviewer
+
+Hi! Hope you're having a great day. So, couple of things about this:
+
+I worked under some time constraints, so I know that this component is not to it's full potential.\
+I have decided against doing animations.\
+I've added very basic tests - I know there are a lot of cases left, e.g. check for keyboard controls, check for selected element etc.\
+The weird margin/padding css is for possible RTL lang support in the future.\
+I've added some of my own UI here just as I saw fit.\
+From the document it wasn't clear if emojis in the options are part of the title or a separate icon. Both are not problematic to add.\
+`SelectedOptions` is an array for possible expantion for multiselect.\
+Component is flexible and can open to the top if there's not enough space at the bottom. Container width is purely for convenience.\
+Accessibility could probably use some more time.\
+I don't mind doing it in any other FE library or framework, just selected React as the most obvious one.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
