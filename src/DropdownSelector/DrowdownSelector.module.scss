@@ -4,6 +4,10 @@
   cursor: pointer;
 }
 
+.disabled {
+  cursor: not-allowed;
+}
+
 .inputWrapper {
   display: flex;
   align-items: center;
@@ -76,7 +80,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
+  cursor: inherit;
 }
 
 .input {

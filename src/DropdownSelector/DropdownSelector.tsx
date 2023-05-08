@@ -15,7 +15,7 @@ interface DropdownSelectorProps {
 
 export const DropdownSelector: React.FC<DropdownSelectorProps> = ({
   placeholder = "Choose an option",
-  disabled,
+  disabled = false,
   options = [],
   selectedOptions,
   onChange,
@@ -155,10 +155,14 @@ export const DropdownSelector: React.FC<DropdownSelectorProps> = ({
     <div
       ref={wrapperRef}
       aria-label="Selector"
-      className={css.wrapper}
+      className={classNames(css.wrapper, {
+        [css.disabled]: disabled,
+      })}
       onClick={() => {
-        inputRef.current?.focus();
-        handleInputFocus();
+        if (!disabled) {
+          inputRef.current?.focus();
+          handleInputFocus();
+        }
       }}
     >
       <div
@@ -193,7 +197,14 @@ export const DropdownSelector: React.FC<DropdownSelectorProps> = ({
               ))}
             </ul>
           )}
-        <Arrow className={css.arrow} onClick={() => setIsOpen((o) => !o)} />
+        <Arrow
+          className={css.arrow}
+          onClick={() => {
+            if (!disabled) {
+              setIsOpen((o) => !o);
+            }
+          }}
+        />
       </div>
       {isOpen && (
         <div
