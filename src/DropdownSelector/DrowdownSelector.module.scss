@@ -13,8 +13,8 @@
   height: 40px;
   border-radius: 6px;
   position: relative;
-  padding-inline-start: 8px;
-  padding-inline-end: 32px;
+  padding-inline-start: 12px;
+  padding-inline-end: 36px;
 }
 
 .inputWrapperBottom {
@@ -49,8 +49,8 @@
 
 .selectedValuesList {
   position: absolute;
-  top: 8px;
-  left: 8px;
+  top: 10px;
+  left: 12px;
   display: flex;
   list-style: none;
   padding: 0;
@@ -59,13 +59,17 @@
   overflow: hidden;
 }
 
+.selectedValueItem {
+  font-size: 14px;
+}
+
 .arrow {
   position: absolute;
   right: 0;
   height: 100%;
-  width: 32px;
-  padding-inline-end: 8px;
-  padding-inline-start: 8px;
+  width: 36px;
+  padding-inline-end: 12px;
+  padding-inline-start: 12px;
   color: #a1a1a1;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -77,8 +81,8 @@
 
 .input {
   pointer-events: none;
-  font-size: 16px;
-  line-height: 20px;
+  font-size: 14px;
+  line-height: 18px;
   border: none;
   display: flex;
   flex-grow: 1;
@@ -123,9 +127,10 @@
 }
 
 .optionItem {
+  font-size: 14px;
   display: flex;
   justify-content: space-between;
-  padding: 8px 8px;
+  padding: 8px 12px;
   border-top: 1px solid transparent;
   border-bottom: 1px solid transparent;
   cursor: pointer;

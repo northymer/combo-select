@@ -187,7 +187,9 @@ export const DropdownSelector: React.FC<DropdownSelectorProps> = ({
           selectedOptions?.length !== 0 && (
             <ul className={css.selectedValuesList}>
               {selectedOptions?.map((opt) => (
-                <li key={opt.value}>{opt.title}</li>
+                <li key={opt.value} className={css.selectedValueItem}>
+                  {opt.title}
+                </li>
               ))}
             </ul>
           )}
