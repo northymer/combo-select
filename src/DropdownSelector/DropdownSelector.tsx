@@ -37,8 +37,6 @@ export const DropdownSelector: React.FC<DropdownSelectorProps> = ({
     (option: DropdownOption) => {
       onChange([option]);
       setIsOpen(false);
-      inputRef.current?.blur();
-      setFocusedOption(null);
     },
     [onChange, setIsOpen]
   );
@@ -112,7 +110,6 @@ export const DropdownSelector: React.FC<DropdownSelectorProps> = ({
 
       if (event.key === "Escape") {
         setIsOpen(false);
-        inputRef.current?.blur();
       }
     }
 
@@ -134,8 +131,11 @@ export const DropdownSelector: React.FC<DropdownSelectorProps> = ({
   ]);
 
   useEffect(() => {
-    if (!isOpen && searchValue) {
+    if (!isOpen) {
       setSearchValue("");
+      inputRef.current?.blur();
+      setIsInputFocused(false);
+      setFocusedOption(null);
     }
   }, [isOpen, setSearchValue, searchValue]);
 
@@ -149,10 +149,6 @@ export const DropdownSelector: React.FC<DropdownSelectorProps> = ({
       setIsOpen(true);
     }
     setIsInputFocused(true);
-  };
-
-  const handleInputBlur = () => {
-    setIsInputFocused(false);
   };
 
   return (
@@ -180,7 +176,7 @@ export const DropdownSelector: React.FC<DropdownSelectorProps> = ({
           value={searchValue}
           onChange={handleSearch}
           onFocus={handleInputFocus}
-          onBlur={handleInputBlur}
+          onBlur={() => setIsInputFocused(true)}
           className={css.input}
           placeholder={
             selectedOptions?.length && !isInputFocused ? undefined : placeholder
@@ -218,10 +214,12 @@ export const DropdownSelector: React.FC<DropdownSelectorProps> = ({
                 onClick={() => handleChange(option)}
               >
                 {option.title}
-                {selectedOptions?.findIndex((o) => o.value === option.value) !==
-                  -1 && (
-                  <span aria-label={`${option.title} is selected`}>✅</span>
-                )}
+                {selectedOptions?.length &&
+                  selectedOptions?.findIndex(
+                    (o) => o.value === option.value
+                  ) !== -1 && (
+                    <span aria-label={`${option.title} is selected`}>✅</span>
+                  )}
               </li>
             ))}
           </ul>
