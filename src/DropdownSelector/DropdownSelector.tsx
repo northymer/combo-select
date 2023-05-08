@@ -198,6 +198,7 @@ export const DropdownSelector: React.FC<DropdownSelectorProps> = ({
             </ul>
           )}
         <Arrow
+          aria-label="Selector toggle"
           className={css.arrow}
           onClick={() => {
             if (!disabled) {
@@ -227,7 +228,7 @@ export const DropdownSelector: React.FC<DropdownSelectorProps> = ({
                 onClick={() => handleChange(option)}
               >
                 {option.title}
-                {selectedOptions?.length &&
+                {selectedOptions?.length !== 0 &&
                   selectedOptions?.findIndex(
                     (o) => o.value === option.value
                   ) !== -1 && (
