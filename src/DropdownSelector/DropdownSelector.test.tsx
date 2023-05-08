@@ -61,4 +61,21 @@ describe("DropdownSelector", () => {
 
     expect(screen.getByText(options[0].title)).toBeTruthy();
   });
+
+  it("should pick value", async () => {
+    render(
+      <DropdownSelector
+        selectedOptions={selectedOptions as DropdownOption[]}
+        onChange={onChange as (o: DropdownOption[]) => void}
+        options={options}
+      />
+    );
+
+    fireEvent.click(screen.getByLabelText("Selector toggle"));
+
+    await screen.findByText(options[0].title);
+    fireEvent.click(screen.getByText(options[0].title));
+
+    expect(onChange).toBeCalled();
+  });
 });

@@ -224,7 +224,6 @@ export const DropdownSelector: React.FC<DropdownSelectorProps> = ({
                 className={classNames(css.optionItem, {
                   [css.optionItemActive]: focusedOption === index,
                 })}
-                value={option.value}
                 onClick={() => handleChange(option)}
               >
                 {option.title}
